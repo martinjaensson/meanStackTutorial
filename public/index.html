@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
 <head>
+	<link rel="stylesheet" href="bootstrap.css">
 	<title>Mean Stack Tutorial</title>
 </head>
-<body>
-<h1>Contact List App</h1>
-
+<body >
+	<script src="angular.min.js"></script>
+	<script src="/controllers/controller.js"></script>
+	<div class="container">
+		<h1>Contact List App</h1>
+		<table class="table" ng-controller="AppCtrl">
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Email</td>
+					<td>Number</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="contact in contacts">
+					<td>{{contact.name}}</td>
+					<td>{{contact.email}}</td>
+					<td>{{contact.number}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div> <!-- End of div container -->
 </body>
 </html>
