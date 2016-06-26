@@ -1,5 +1,6 @@
 var myApp = angular.module('myApp', []);
 myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
+	var edit = false;
 	console.log("Hello World from controller");
 	
 	var refresh = function() {
@@ -12,10 +13,12 @@ myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
 	refresh();
 	$scope.addContact = function(){
 		console.log($scope.contact);
-		$http.post('/contactlist', $scope.contact).success(function(response){
-			console.log(response);
-			refresh();
-		});
+		if (edit == false)  {
+			$http.post('/contactlist', $scope.contact).success(function(response){
+				console.log(response);
+				refresh();
+			});
+		};
 	};
 
 	$scope.removeContact = function(id) {
@@ -27,6 +30,7 @@ myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
 	}
 
 	$scope.editContact = function(id) {
+		edit = true;
 		console.log(id);
 		$http.get('/contactlist/' + id).success(function(response) {
 			console.log(response.name);
@@ -38,11 +42,13 @@ myApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
 		console.log($scope.contact._id);
 		$http.put('/contactlist/' + $scope.contact._id, $scope.contact).success(function(response) {
 			refresh();
+			edit=false;
 		});
 	};
 
 	$scope.clearInput = function() {
 		$scope.contact = "";
+		edit= false;
 	};
 
 
